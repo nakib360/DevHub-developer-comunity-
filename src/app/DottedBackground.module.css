@@ -4,20 +4,34 @@
   position: relative;
   flex: 1;
   background-color: white;
-  background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-  background-size: 20px 20px;
 }
 
+.background::before,
 .background::after {
   position: absolute;
   inset: 0;
   pointer-events: none;
   content: "";
-  background-image: radial-gradient(#2563eb 1.5px, transparent 1.5px);
-  background-size: 20px 20px;
+}
+
+.background::before {
+  z-index: 0;
+  background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+  background-size: 15px 15px;
+}
+
+.background::after {
+  z-index: 0;
+  background-image: radial-gradient(#60a5fa 1px, transparent 1.5px);
+  background-size: 15px 15px;
   mask-image: radial-gradient(
     circle 170px at var(--cursor-x) var(--cursor-y),
     black 0,
     transparent 100%
   );
+}
+
+.content {
+  position: relative;
+  z-index: 1;
 }

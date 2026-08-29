@@ -4,7 +4,7 @@ import { FiShare2, FiMessageSquare } from 'react-icons/fi';
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-[#f0f3ff] text-slate-600 px-8 py-12 text-sm font-sans">
+    <footer className="w-full text-slate-600 px-8 py-12 text-sm ">
       <div className="max-w-7xl mx-auto">
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">

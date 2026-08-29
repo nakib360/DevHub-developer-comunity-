@@ -32,7 +32,7 @@ export default function DottedBackground({ children }) {
       onPointerMove={updateCursorPosition}
       onPointerLeave={hideCursorEffect}
     >
-      {children}
+      <div className={styles.content}>{children}</div>
     </main>
   );
 }
