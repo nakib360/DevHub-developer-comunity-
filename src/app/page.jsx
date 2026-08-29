@@ -1,5 +1,7 @@
 import { RiRocket2Fill } from "react-icons/ri";
 import DottedBackground from "./_DotBg/DottedBackground";
+import DevImg from "../../public/dev.png"
+import Image from "next/image";
 
 const Home = () => {
   return (
@@ -13,11 +15,11 @@ const Home = () => {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-600 text-white text-xs font-semibold shadow-sm">
               <RiRocket2Fill className="w-3.5 h-3.5" />
-              <span>DevHub v2.0 is Live</span>
+              <span>DevHub v1.0</span>
             </div>
 
             {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
               Where Developers Connect, Build and Learn.
             </h1>
 
@@ -52,10 +54,10 @@ const Home = () => {
 
           {/* Right Image Placeholder Column */}
           <div className="w-full flex justify-center items-center">
-            <img
-              src=""
+            <Image
+              src={DevImg}
               alt="DevHub Application Interface"
-              className="w-full h-auto max-w-lg lg:max-w-none rounded-2xl shadow-2xl border border-slate-200 object-cover"
+              className="w-full transition-all -rotate-3 hover:rotate-0 h-auto max-w-lg lg:max-w-none rounded-2xl shadow-2xl border border-slate-200 object-cover"
             />
           </div>
 
