@@ -1,8 +1,10 @@
+import DottedBackground from "./DottedBackground";
+
 const Home = () => {
   return (
-    <div>
+    <DottedBackground>
       <p>its nextjs page</p>
-    </div>
+    </DottedBackground>
   );
 };
 

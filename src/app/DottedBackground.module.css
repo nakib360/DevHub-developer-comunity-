@@ -1,0 +1,23 @@
+.background {
+  --cursor-x: -240px;
+  --cursor-y: -240px;
+  position: relative;
+  flex: 1;
+  background-color: white;
+  background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.background::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background-image: radial-gradient(#2563eb 1.5px, transparent 1.5px);
+  background-size: 20px 20px;
+  mask-image: radial-gradient(
+    circle 170px at var(--cursor-x) var(--cursor-y),
+    black 0,
+    transparent 100%
+  );
+}
