@@ -1,6 +1,6 @@
 import { RiRocket2Fill } from "react-icons/ri";
 import DottedBackground from "./_DotBg/DottedBackground";
-import DevImg from "../../public/dev.png"
+import DevImg from "../../../public/dev.png"
 import Image from "next/image";
 
 const Home = () => {

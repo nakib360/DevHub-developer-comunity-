@@ -13,7 +13,7 @@ const Header = () => {
             <div className="flex gap-3 md:gap-5 items-center">
                 <SmallNav nav={nav}/>
                 <p className="text-2xl text-blue-600 font-bold">Dev hub</p>
-                <div className="hidden md:flex gap-2 items-center">
+                <div className="hidden md:flex gap-4 items-center">
                     {
                         nav.map(nav => {
                             return (
@@ -27,8 +27,8 @@ const Header = () => {
             </div>
 
             <div className="flex gap-2 items-center">
-                <p>Sign in</p>
-                <button className="bg-blue-600 px-3 py-2 rounded-sm text-white">Get started</button>
+                <Link href={"/Login"} className="cursor-pointer ">Sign in</Link>
+                <Link href={"/SignUp"} className="bg-blue-600 px-3 py-2 rounded-sm text-white">Get started</Link>
             </div>
         </div>
     );
