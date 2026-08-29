@@ -1,7 +1,7 @@
 const Home = () => {
   return (
     <div>
-      <p>its nextjs</p>
+      <p>its nextjs page</p>
     </div>
   );
 };
