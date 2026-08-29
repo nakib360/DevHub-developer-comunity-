@@ -1,23 +1,13 @@
-import { Geist, Geist_Mono, Google_Sans } from "next/font/google";
+import { Google_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "./Common/Header/page";
 import Footer from "./Common/Footer/page.";
 
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const googleSans = Google_Sans({
+  variable: "--font-google-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const googleSens = Google_Sans({
-  variable: "--font-google-sens",
-  subsets: ["latin"],
-})
 
 export const metadata = {
   title: "Create Next App",
@@ -28,9 +18,9 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${googleSens.variable} h-full antialiased`}
+      className={`${googleSans.variable} h-full antialiased`}
     >
-      <body className={`min-h-full flex flex-col ${googleSens.variable}`} suppressHydrationWarning>
+      <body className={`min-h-full flex flex-col ${googleSans.className}`} suppressHydrationWarning>
         <Header />
         {children}
         <Footer/>

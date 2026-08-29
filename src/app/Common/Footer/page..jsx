@@ -39,7 +39,7 @@ const Footer = () => {
           <div className="md:col-span-7 grid grid-cols-3 gap-6">
             {/* Product */}
             <div>
-              <h3 className="font-semibold text-xs tracking-wider text-slate-800 uppercase mb-4 font-mono">
+              <h3 className="font-semibold text-xs tracking-wider text-slate-800 uppercase mb-4 ">
                 Product
               </h3>
               <ul className="space-y-3">
@@ -55,7 +55,7 @@ const Footer = () => {
 
             {/* Resources */}
             <div>
-              <h3 className="font-semibold text-xs tracking-wider text-slate-800 uppercase mb-4 font-mono">
+              <h3 className="font-semibold text-xs tracking-wider text-slate-800 uppercase mb-4 ">
                 Resources
               </h3>
               <ul className="space-y-3">
@@ -71,7 +71,7 @@ const Footer = () => {
 
             {/* Company */}
             <div>
-              <h3 className="font-semibold text-xs tracking-wider text-slate-800 uppercase mb-4 font-mono">
+              <h3 className="font-semibold text-xs tracking-wider text-slate-800 uppercase mb-4 ">
                 Company
               </h3>
               <ul className="space-y-3">
@@ -97,7 +97,7 @@ const Footer = () => {
             © 2024 DevHub Inc. All rights reserved.
           </p>
 
-          <div className="bg-[#e4e9fc] text-slate-700 px-3 py-1 rounded font-mono text-[11px]">
+          <div className="bg-[#e4e9fc] text-slate-700 px-3 py-1 rounded  text-[11px]">
             System Status: All systems operational
           </div>
         </div>
