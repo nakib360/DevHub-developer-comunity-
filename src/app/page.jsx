@@ -1,5 +1,5 @@
 import { RiRocket2Fill } from "react-icons/ri";
-import DottedBackground from "./DottedBackground";
+import DottedBackground from "./_DotBg/DottedBackground";
 
 const Home = () => {
   return (
