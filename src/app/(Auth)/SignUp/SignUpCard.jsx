@@ -1,6 +1,5 @@
 "use client"
 import React, { useState } from 'react';
-import { signUpWithEmailAndPass } from '../lib/SignUp';
 
 export default function SignUpCard() {
   const [formData, setFormData] = useState({
@@ -225,8 +224,8 @@ export default function SignUpCard() {
             type="submit"
             disabled={!isFormValid}
             className={`w-full mt-2 py-3 px-4 text-white font-medium text-sm rounded-xl transition-all shadow-sm ${isFormValid
-                ? 'bg-[#3b2bee] hover:bg-[#3223d6] cursor-pointer opacity-100'
-                : 'bg-[#3b2bee] opacity-40 cursor-not-allowed'
+              ? 'bg-[#3b2bee] hover:bg-[#3223d6] cursor-pointer opacity-100'
+              : 'bg-[#3b2bee] opacity-40 cursor-not-allowed'
               }`}
           >
             Create Account
