@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from 'react';
+import { signUpWithEmailAndPass } from '../lib/SignUp';
 
 export default function SignUpCard() {
   const [formData, setFormData] = useState({
@@ -21,9 +22,9 @@ export default function SignUpCard() {
 
   const isPasswordValid = Object.values(passwordCriteria).every(Boolean);
   const doPasswordsMatch = formData.password.length > 0 && formData.password === formData.confirmPassword;
-  
+
   // Realtime check if the entire form is valid
-  const isFormValid = 
+  const isFormValid =
     formData.fullName.trim() !== '' &&
     formData.username.trim() !== '' &&
     formData.email.trim() !== '' &&
@@ -43,9 +44,9 @@ export default function SignUpCard() {
     e.preventDefault();
     if (!isFormValid) return;
 
-    console.log('Form Submitted Successfully:', formData);
+    signUpWithEmailAndPass(e.target.email.value, e.target.password.value)
+      .then(res => console.log(res))
 
-    // Clear Form State
     setFormData({
       fullName: '',
       username: '',
@@ -59,7 +60,7 @@ export default function SignUpCard() {
   return (
     <div className="min-h-screen w-full bg-[#f0f2f9] flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 sm:p-10 border border-slate-100 my-8">
-        
+
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-[#3b2bee] mb-1">DevHub</h1>
@@ -226,11 +227,10 @@ export default function SignUpCard() {
           <button
             type="submit"
             disabled={!isFormValid}
-            className={`w-full mt-2 py-3 px-4 text-white font-medium text-sm rounded-xl transition-all shadow-sm ${
-              isFormValid
+            className={`w-full mt-2 py-3 px-4 text-white font-medium text-sm rounded-xl transition-all shadow-sm ${isFormValid
                 ? 'bg-[#3b2bee] hover:bg-[#3223d6] cursor-pointer opacity-100'
                 : 'bg-[#3b2bee] opacity-40 cursor-not-allowed'
-            }`}
+              }`}
           >
             Create Account
           </button>

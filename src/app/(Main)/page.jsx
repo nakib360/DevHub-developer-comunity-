@@ -1,9 +1,16 @@
 import { RiRocket2Fill } from "react-icons/ri";
 import DottedBackground from "./_DotBg/DottedBackground";
+import { cookies } from 'next/headers'
 import DevImg from "../../../public/dev.png"
 import Image from "next/image";
+import { createClient } from "../utils/supabase/server";
 
-const Home = () => {
+const Home = async () => {
+  const cookieStore = await cookies()
+  const supabase = createClient(cookieStore)
+
+  const { data: todos } = await supabase.from('todos').select()
+  console.log(todos);
   return (
     <DottedBackground>
       <section className="relative min-h-screen w-full  px-6 py-12 md:px-16 lg:px-24 flex items-center justify-center">
