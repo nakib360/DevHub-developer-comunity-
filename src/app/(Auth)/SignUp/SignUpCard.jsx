@@ -44,9 +44,6 @@ export default function SignUpCard() {
     e.preventDefault();
     if (!isFormValid) return;
 
-    signUpWithEmailAndPass(e.target.email.value, e.target.password.value)
-      .then(res => console.log(res))
-
     setFormData({
       fullName: '',
       username: '',
