@@ -1,5 +1,6 @@
 "use client"
 
+import { useAuth } from "@/app/(Auth)/AuthProvider";
 import Link from "next/link";
 import { useState } from "react";
 import { RiMenuUnfold3Line } from "react-icons/ri";
@@ -7,6 +8,8 @@ import { RiMenuUnfold3Line } from "react-icons/ri";
 
 const SmallNav = ({ nav }) => {
   const [openNav, setOpenNav] = useState(false);
+  const { user } = useAuth();
+  console.log({user});
   return (
     <div >
       <RiMenuUnfold3Line onClick={() => setOpenNav(!openNav)} className="cursor-pointer md:hidden text-2xl" />

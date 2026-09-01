@@ -1,7 +1,7 @@
 import { Google_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "./_Common/Header/page";
-import Footer from "./_Common/Footer/page.";
+import { AuthProvider } from "../(Auth)/AuthProvider";
 
 const googleSans = Google_Sans({
   variable: "--font-google-sans",
@@ -21,9 +21,10 @@ export default function RootLayout({ children }) {
       className={`${googleSans.variable} h-full antialiased`}
     >
       <body className={`min-h-full flex flex-col ${googleSans.className}`} suppressHydrationWarning>
-        <Header />
-        {children}
-        <Footer/>
+        <AuthProvider>
+          <Header />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

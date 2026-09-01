@@ -1,18 +1,25 @@
 "use client"
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { SignIn, SignInWithGoogle } from '../AuthActions';
+import Link from 'next/link';
 
 export default function LoginCard() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     rememberMe: false,
   });
+  const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   // Realtime check: Valid email format + password length requirement
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim());
-  const isPasswordValid = formData.password.trim().length >= 6; // Requires at least 6 characters
-  
-  // Entire form must meet conditions to unlock the button
+  const isPasswordValid = formData.password.trim().length >= 6;
+
   const isFormValid = isEmailValid && isPasswordValid;
 
   const handleChange = (e) => {
@@ -23,18 +30,60 @@ export default function LoginCard() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const getErrorMessage = (code) => {
+    switch (code) {
+      case 'auth/invalid-credential':
+      case 'auth/wrong-password':
+        return 'ইমেইল অথবা পাসওয়ার্ড ভুল।';
+      case 'auth/user-not-found':
+        return 'এই ইমেইল দিয়ে কোনো একাউন্ট পাওয়া যায়নি।';
+      case 'auth/too-many-requests':
+        return 'অনেকবার চেষ্টা করা হয়েছে, কিছুক্ষণ পর আবার চেষ্টা করুন।';
+      case 'auth/invalid-email':
+        return 'ইমেইল ঠিকানাটি সঠিক নয়।';
+      default:
+        return 'লগইন ব্যর্থ হয়েছে, আবার চেষ্টা করুন।';
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isFormValid) return;
 
-    console.log('Login Submitted:', formData);
+    setError('');
+    setIsSubmitting(true);
 
-    // Reset Form State
-    setFormData({
-      email: '',
-      password: '',
-      rememberMe: false,
-    });
+    try {
+      await SignIn(formData.email, formData.password);
+
+      setFormData({
+        email: '',
+        password: '',
+        rememberMe: false,
+      });
+
+      router.push("/");
+    } catch (err) {
+      console.log(err);
+      setError(getErrorMessage(err.code));
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleGoogle = async () => {
+    setError('');
+    setIsGoogleLoading(true);
+
+    try {
+      await SignInWithGoogle();
+      router.push("/");
+    } catch (err) {
+      console.log(err);
+      setError(getErrorMessage(err.code));
+    } finally {
+      setIsGoogleLoading(false);
+    }
   };
 
   return (
@@ -47,6 +96,13 @@ export default function LoginCard() {
           <h2 className="text-2xl font-bold text-slate-900 tracking-tight mb-1">Welcome back</h2>
           <p className="text-slate-500 text-sm">Log in to your account to continue</p>
         </div>
+
+        {/* Error message */}
+        {error && (
+          <div className="mb-4 px-3 py-2 rounded-lg bg-red-50 border border-red-100 text-red-600 text-sm">
+            {error}
+          </div>
+        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -119,17 +175,16 @@ export default function LoginCard() {
             </a>
           </div>
 
-          {/* Submit Button (Fades & Disables until all conditions pass) */}
+          {/* Submit Button */}
           <button
             type="submit"
-            disabled={!isFormValid}
-            className={`w-full py-3 px-4 bg-[#3b2bee] text-white font-medium text-sm rounded-xl transition-all shadow-sm ${
-              isFormValid
-                ? 'hover:bg-[#3223d6] opacity-100 cursor-pointer'
-                : 'opacity-40 cursor-not-allowed'
-            }`}
+            disabled={!isFormValid || isSubmitting}
+            className={`w-full py-3 px-4 bg-[#3b2bee] text-white font-medium text-sm rounded-xl transition-all shadow-sm ${isFormValid && !isSubmitting
+              ? 'hover:bg-[#3223d6] opacity-100 cursor-pointer'
+              : 'opacity-40 cursor-not-allowed'
+              }`}
           >
-            Sign in
+            {isSubmitting ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
 
@@ -142,37 +197,33 @@ export default function LoginCard() {
         </div>
 
         {/* Social Options Side-by-Side */}
-        <div className="grid grid-cols-2 gap-3">
-          <button
-            type="button"
-            className="w-full cursor-pointer flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium hover:bg-slate-50 transition-colors shadow-sm"
-          >
-            <svg className="w-4 h-4 text-slate-800 fill-current" viewBox="0 0 24 24">
-              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-            </svg>
-            GitHub
-          </button>
+        <div>
 
           <button
+            onClick={handleGoogle}
             type="button"
             className="w-full cursor-pointer flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium hover:bg-slate-50 transition-colors shadow-sm"
           >
+            {isGoogleLoading ? '...' : <>
             <svg className="w-4 h-4" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
               <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
               <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
             </svg>
-            Google
+
+              Google
+            </>
+            }
           </button>
         </div>
 
         {/* Footer */}
         <div className="mt-8 text-center text-xs text-slate-600">
           Don&apos;t have an account?{' '}
-          <a href="#" className="font-semibold text-[#3b2bee] hover:underline">
+          <Link href="/SignUp" className="font-semibold text-[#3b2bee] hover:underline">
             Create an account
-          </a>
+          </Link>
         </div>
 
       </div>

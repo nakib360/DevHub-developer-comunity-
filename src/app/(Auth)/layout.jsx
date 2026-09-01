@@ -18,5 +18,6 @@ export default function AuthLayout({ children }) {
         {children}
       </body>
     </html>
+    
   );
 }

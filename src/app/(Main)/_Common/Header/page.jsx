@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SmallNav from "./SmallNav";
+import AuthBtns from "./AuthBtns";
 
 
 const Header = () => {
@@ -26,10 +27,7 @@ const Header = () => {
                 </div>
             </div>
 
-            <div className="flex gap-2 items-center">
-                <Link href={"/Login"} className="cursor-pointer ">Sign in</Link>
-                <Link href={"/SignUp"} className="bg-blue-600 px-3 py-2 rounded-sm text-white">Get started</Link>
-            </div>
+            <AuthBtns/>
         </div>
     );
 };
